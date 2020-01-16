@@ -41,6 +41,11 @@ public class LoggingController {
         return this.logService.findByPeriod(start, end);
     }
 
+    @GetMapping("/logs/custom-period")
+    public List<Log> findByCustomPeriod(@RequestParam String period) {
+        return this.logService.findByCustomPeriod(period);
+    }
+
     @GetMapping("/logs/type/{type}")
     public List<Log> findByType(@PathVariable LogType type) {
         return this.logService.findByType(type);

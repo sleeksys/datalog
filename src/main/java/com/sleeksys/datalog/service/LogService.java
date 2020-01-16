@@ -1,6 +1,7 @@
 package com.sleeksys.datalog.service;
 
 import com.sleeksys.datalog.exception.ResourceNotFoundException;
+import com.sleeksys.datalog.model.CustomPeriod;
 import com.sleeksys.datalog.model.Log;
 import com.sleeksys.datalog.model.LogType;
 import com.sleeksys.datalog.repository.LogRepository;
@@ -27,9 +28,15 @@ public class LogService {
         return this.findAll()
                 .stream()
                 .filter(log ->
-                        (start <= log.getDate().getTime() && end >= log.getDate().getTime())
+                        (start <= log.getDate().getTime() && log.getDate().getTime() <= end)
                 )
                 .collect(Collectors.toList());
+    }
+
+    public List<Log> findByCustomPeriod(String period) {
+        return this.findByPeriod(
+                CustomPeriod.getStartDate(period),
+                CustomPeriod.getEndDate());
     }
 
     public List<Log> findByType(LogType type) {
