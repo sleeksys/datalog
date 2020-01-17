@@ -25,12 +25,13 @@ public class LogService {
     }
 
     public List<Log> findByPeriod(Long start, Long end) {
-        return this.findAll()
-                .stream()
-                .filter(log ->
-                        (start <= log.getDate().getTime() && log.getDate().getTime() <= end)
-                )
-                .collect(Collectors.toList());
+        Date dateStart = new Date();
+        Date dateEnd = new Date();
+
+        dateStart.setTime(start);
+        dateEnd.setTime(end);
+
+        return this.logRepository.findByPeriod(dateStart, dateEnd);
     }
 
     public List<Log> findByCustomPeriod(String period) {
